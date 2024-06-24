@@ -1,0 +1,55 @@
+---
+import AsideMenu from "../components/AsideMenu.astro";
+import { ViewTransitions } from "astro:transitions";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions fallback="none" />
+  </head>
+  <body>
+    <div id="app" class="relative h-screen p-2 gap-2">
+      <aside
+        class="[grid-area:aside] flex-col flex overflow-y-auto bg-zinc-900"
+      >
+        <AsideMenu />
+      </aside>
+      <main class="[grid-area:main]rounded-lg overflow-y-auto bg-zinc-900">
+        <slot />
+      </main>
+      <footer class="[grid-area:player] min-h-[100px] bg-orange-300">
+        PLAYER
+      </footer>
+    </div>
+    <style>
+      #app {
+        display: grid;
+        grid-template-areas:
+          "aside main main"
+          "player player player";
+        grid-template-columns: 350px 1fr;
+        grid-template-rows: 1fr auto;
+      }
+    </style>
+
+    <style is:global>
+      html {
+        font-family: system-ui, sans-serif;
+        background: #010101;
+      }
+    </style>
+  </body>
+</html>
